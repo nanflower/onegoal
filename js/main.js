@@ -7,6 +7,9 @@ cc.game.onStart = function () {
     cc.view.setDesignResolutionSize(480,800,mode);
     cc.view.resizeWithBrowserSize(true);
 
+    //var soundId = cc.audioEngine.playEffect("goal.mp3");     //默认不循环播
+    cc.audioEngine.playMusic(res.backmusic,true);
+
     cc.LoaderScene.preload(res.fengmian, function(){
         cc.director.runScene(new gamebegin());
     },this);

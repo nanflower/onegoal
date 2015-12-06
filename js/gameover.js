@@ -16,6 +16,8 @@ var gameScene3 = cc.Scene.extend({
 
     onEnter:function()
     {
+        cc.audioEngine.stopMusic(true);
+        cc.audioEngine.playMusic(res.lose,false);
         this._super();
         var winsize = cc.director.getWinSize();
 
@@ -79,6 +81,7 @@ var gameScene3 = cc.Scene.extend({
         bkPng.setAnchorPoint(cc.p(0.5, 0.5)); // 设置锚点
         bkPng.setPosition(this._size.width / 2,this._size.height / 2); // 设施位置
         scene.addChild(bgLayer,0); //将层加载进场景
+        cc.audioEngine.playMusic(res.backmusic,true);
         cc.Director._getInstance().runScene(cc.TransitionFade.create(1.2,scene)); // 场景切换
 
         //var musicStop = cc.AudioEngine.getInstance();

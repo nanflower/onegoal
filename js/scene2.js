@@ -14,7 +14,6 @@ var gameScene2 = cc.Scene.extend({
         cc.log("HelloWorld init")
 
     },
-    TAG_CurrentView:1,
     onEnter:function () {
         this._super();
         var winSize = cc.director.getWinSize();
@@ -39,6 +38,7 @@ var gameScene2 = cc.Scene.extend({
         this.addChild(ball,3,Tag_ball);
         ball.runAction(cc.jumpTo(4, cc.p(winSize.width/2, winSize.height/2-130), 100, 4));
 
+        this.goalkeeperready();
 
         cc.eventManager.addListener({
             event: cc.EventListener.TOUCH_ONE_BY_ONE,
@@ -84,7 +84,24 @@ var gameScene2 = cc.Scene.extend({
         this.ready();
     },
 
+    goalkeeperready:function()
+    {
+       this.schedule(this.update,0.7); 
+    },
+    update:function()
+    {
+        var winSize=cc.director.getWinSize();
+        var goalkeeper = this.getChildByTag(Tag_goalkeeper);
+        var goalkeeperdes = winSize.width/2+150*(Math.random()*2-1);
+        var goalkeeperaction = cc.Sequence.create(
+            cc.MoveTo.create(0.3,cc.p(goalkeeperdes,winSize.height/2+40)),
+            cc.DelayTime.create(0.5),
+            cc.CallFunc.create(function(){
 
+            }.bind(this),this)
+        );
+        goalkeeper.runAction(goalkeeperaction);
+    },
     onMouseUp:function(mouselocation)
     {
         this.run(mouselocation);
@@ -111,15 +128,6 @@ var gameScene2 = cc.Scene.extend({
         var winSize=cc.director.getWinSize();
 
         var goalkeeper = this.getChildByTag(Tag_goalkeeper);
-        var goalkeeperdes = winSize.width/2+150*(Math.random()*2-1);
-        var goalkeeperaction = cc.Sequence.create(
-            cc.MoveTo.create(0.3,cc.p(goalkeeperdes,winSize.height/2+40)),
-            cc.DelayTime.create(0.3),
-            cc.CallFunc.create(function(){
-
-            }.bind(this),this)
-        );
-        goalkeeper.runAction(goalkeeperaction);
 
 
 
@@ -133,20 +141,35 @@ var gameScene2 = cc.Scene.extend({
         var shotaction = cc.Sequence.create(
             cc.MoveTo.create(0.3,cc.p(targetX,targetY)),
             cc.CallFunc.create(function(){
-               if((Math.abs(goalkeeperdes-targetX)<50)&&(Math.abs(winSize.height/2+40-targetY)<50))
+               if((Math.abs(goalkeeper.x-targetX)<50)&&(Math.abs(winSize.height/2+40-targetY)<50))
                 {
                     score+=0;
+
                     this.gameOVer();
                 }
                 else if((targetX<100)||(targetX>390)||(targetY>570)||(targetY<400))
                 {
                     score+=0;
+
                     this.gameOVer();
                 }
                 else
                 {
                     score+=100;
-                    cc.director.runScene(new gameScene1());
+                    cc.audioEngine.stopMusic();
+                    cc.audioEngine.playMusic(res.cheer,false);
+                    this.unschedule(this.update);
+                    var label = cc.LabelTTF.create("GOAL!!!", "Arial", 100);
+                    label.setString("GOAL!!!");
+                    label.setPosition(250, 600);
+                    this.addChild(label, 1);
+
+                    this.runAction(cc.Sequence.create( cc.DelayTime.create(5), cc.CallFunc.create(function () {                   
+                        cc.director.runScene(new gameScene1());}))
+                    );
+
+
+
                 }
             }.bind(this),this)
 

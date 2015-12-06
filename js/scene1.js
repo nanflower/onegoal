@@ -57,6 +57,8 @@ var gameScene1 = cc.Scene.extend({
 
         var ballPosition = 0;
         var ballState = false;
+        if(!cc.audioEngine.isMusicPlaying())
+            cc.audioEngine.playMusic(res.backmusic,true);
 
         cc.eventManager.addListener({
             event: cc.EventListener.TOUCH_ONE_BY_ONE,

@@ -1,4 +1,7 @@
 var res = {
+	backmusic : "music/attraction.mp3",
+	cheer : "music/cheer1.ogg",
+	lose : "music/lose.ogg",
 	fengmian : "images/fengmian.png",
 	startmenu : "images/goalmenu.png",
 	resetmenu : 'images/resetmenu.png',

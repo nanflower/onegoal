@@ -29,7 +29,7 @@ var gamestart = cc.Layer.extend({
         var newGame = cc.MenuItemSprite.create(newGameNormal, newGameSelected, newGameDisabled, this.onNewGame, this);
         var menu = cc.Menu.create(newGame);
         menu.setAnchorPoint(cc.p(0.5, 0.5));// 设置锚点 
-        menu.setPosition(this._size.width / 2 , this._size.height /2 - 80);// 设置位置
+        menu.setPosition(this._size.width / 2 , this._size.height /2 - 100);// 设置位置
         menu.alignItemsVerticallyWithPadding(10);
         this.gameLayer.addChild(menu, 1, 2);
 

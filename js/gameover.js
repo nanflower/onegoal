@@ -16,8 +16,8 @@ var gameScene3 = cc.Scene.extend({
 
     onEnter:function()
     {
-        cc.audioEngine.stopMusic(true);
-        cc.audioEngine.playMusic(res.lose,false);
+        cc.audioEngine.stopMusic(res.backmusic);
+        cc.audioEngine.playEffect(res.lose,false);
         this._super();
         var winsize = cc.director.getWinSize();
 
@@ -55,9 +55,9 @@ var gameScene3 = cc.Scene.extend({
         var string = parseInt(score, 10).toString();
         result.setString(string);*/
 
-        var newGameNormal = cc.Sprite.create("images/resetmenu.png", cc.rect(0, 0, 126, 33));
-        var newGameSelected = cc.Sprite.create("images/resetmenu.png", cc.rect(0, 33, 126, 33));
-        var newGameDisabled = cc.Sprite.create("images/resetmenu.png", cc.rect(0, 33 * 2, 126, 33));
+        var newGameNormal = cc.Sprite.create("images/resetmenu.png", cc.rect(0, 0, 176, 65));
+        var newGameSelected = cc.Sprite.create("images/resetmenu.png", cc.rect(0, 33, 176, 65));
+        var newGameDisabled = cc.Sprite.create("images/resetmenu.png", cc.rect(0, 33 * 2, 176, 65));
         var newGame = cc.MenuItemSprite.create(newGameNormal, newGameSelected, newGameDisabled, this.onResetGame, this);
         var menu = cc.Menu.create(newGame);
         menu.setAnchorPoint(cc.p(0.5, 0.5));// 设置锚点 

@@ -57,8 +57,43 @@ var gameScene1 = cc.Scene.extend({
 
         var ballPosition = 0;
         var ballState = false;
-        if(!cc.audioEngine.isMusicPlaying())
-            cc.audioEngine.playMusic(res.backmusic,true);
+
+        cc.inputManager.setAccelerometerEnabled(true);
+
+        cc.eventManager.addListener({
+            event: cc.EventListener.ACCELERATION, 
+            callback: function(acc, event){ 
+                var ptx;
+                var global_ball;
+                global_ball = ball.getPosition();
+                var pty = global_ball.y;
+
+                if(pty > 20 ){
+                                   
+                    if(acc.x > -0.2 && acc.x < 0.2 && ballState)
+                    {
+                        ptx = size.width/2;
+                        ball.runAction(cc.place(cc.p( ptx, pty)));
+                        ballState = false;
+                    }
+
+                    if(acc.x < -0.3 && global_ball.x > size.width/4)
+                    {
+                        ptx = size.width/4;
+                        ballState = true;
+                        ball.runAction(cc.place(cc.p( ptx, pty)))
+                    }
+
+                    if(acc.x > 0.3 && global_ball.x <size.width*3/4)
+                    {
+                        ptx = size.width*3/4;
+                        ballState = true;
+                        ball.runAction(cc.place(cc.p( ptx, pty)))
+                    }
+
+                }   
+            }  
+          }, ball);
 
         cc.eventManager.addListener({
             event: cc.EventListener.TOUCH_ONE_BY_ONE,
@@ -85,21 +120,34 @@ var gameScene1 = cc.Scene.extend({
                       {
                         ballPosition--;
                       }
+                    }           
+                }else if (delat >= -5 || delat <= 5){
+                    if(touchEnd.x < size.width/2){
+                      if(ballPosition != -1)
+                      {
+                        ballPosition--;
+                      }
+                    }           
+                    if(touchEnd.x > size.width/2){
+                      if(ballPosition != 1)
+                      {
+                        ballPosition++;
+                      }
                     }
-
-                    var p0 = ball.getPosition();
-                    var p1x = 0;
-                    var p1y = p0.y;
-                    if(ballPosition === 0)
-                    {
-                      p1x = size.width/2;
-                    }else if(ballPosition === 1){
-                      p1x = size.width*3/4;
-                    }else if(ballPosition === -1){
-                      p1x = size.width/4;
-                    }
-                    ball.runAction(cc.place(cc.p( p1x, p1y)));
                 }
+
+                var p0 = ball.getPosition();
+                var p1x = 0;
+                var p1y = p0.y;
+                if(ballPosition === 0)
+                {
+                    p1x = size.width/2;
+                }else if(ballPosition === 1){
+                    p1x = size.width*3/4;
+                }else if(ballPosition === -1){
+                    p1x = size.width/4;
+                }
+                ball.runAction(cc.place(cc.p( p1x, p1y)));
             }
         }, this);
 

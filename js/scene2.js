@@ -156,15 +156,14 @@ var gameScene2 = cc.Scene.extend({
                 else
                 {
                     score+=100;
-                    cc.audioEngine.stopMusic();
-                    cc.audioEngine.playMusic(res.cheer,false);
+                    cc.audioEngine.playEffect(res.cheer,false);
                     this.unschedule(this.update);
                     var label = cc.LabelTTF.create("GOAL!!!", "Arial", 100);
                     label.setString("GOAL!!!");
                     label.setPosition(250, 600);
                     this.addChild(label, 1);
 
-                    this.runAction(cc.Sequence.create( cc.DelayTime.create(5), cc.CallFunc.create(function () {                   
+                    this.runAction(cc.Sequence.create( cc.DelayTime.create(2), cc.CallFunc.create(function () {
                         cc.director.runScene(new gameScene1());}))
                     );
 

@@ -181,6 +181,7 @@ var gameScene1 = cc.Scene.extend({
             else{
                 stateLabel.setString("Socre:"+score);
                 cc.director.runScene(new gameScene2());
+
             }
 
             function Crash(player){

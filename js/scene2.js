@@ -17,8 +17,10 @@ var gameScene2 = cc.Scene.extend({
     onEnter:function () {
         this._super();
         var winSize = cc.director.getWinSize();
-
-        var door =cc.Sprite.create(res.door);
+        if(score === 0)
+            var door = cc.Sprite.create(res.door_first);
+        else
+            var door = cc.Sprite.create(res.door);
         door.setPosition(winSize.width/2,winSize.height/2);
         this.addChild(door,1,Tag_door);
 
@@ -36,6 +38,8 @@ var gameScene2 = cc.Scene.extend({
         //ball.setScale(0.1);
         ball.setPosition(winSize.width/2-200,100);
         this.addChild(ball,3,Tag_ball);
+
+
         ball.runAction(cc.jumpTo(4, cc.p(winSize.width/2, winSize.height/2-130), 100, 4));
 
         this.goalkeeperready();

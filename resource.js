@@ -11,6 +11,7 @@ var res = {
 	Anti : "images/antiplayer.png",
 	ball:"images/ball.png",
 	door:"images/door.png",
+	door_first:"images/door_first.png",
 	gameoverpic:"images/gameoverpic.jpg"
 };
 
